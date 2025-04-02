@@ -1,0 +1,44 @@
+
+
+[
+    {
+      "id": 1,
+      "name": "Arroz Largo Fino 500g",
+      "brand": "Molinos ala",
+      "price": 680,
+      "image": "arrozLargoFino.png",
+      "description": "Arroz grano largo fino de alta calidad, paquete de 500g."
+    },
+    {
+      "id": 2,
+      "name": "Arroz Largo Fino 1kg",
+      "brand": "Molinos ala",
+      "price": 1200,
+      "image": "arrozLargoFino.png",
+      "description": "FArroz grano largo fino de alta calidad, paquete de 1kg."
+    },
+    {
+      "id": 3,
+      "name": "Arroz No Se Pasa 500g",
+      "brand": "Molinos ala",
+      "price": 800,
+      "image": "arrozParboil.png",
+      "description": "Arroz grano parboil no se pasa de alta calidad, paquete de 500g."
+    },
+    {
+      "id": 4,
+      "name": "Cafe Molido intenso Bonafide 125g",
+      "brand": "Bonafide",
+      "price": 2800,
+      "image": "cafeBonafideMolidoIntenso.png",
+      "description": "cafe molido para colar de exelente calidad, paquete 125g"
+    },
+    {
+      "id": 5,
+      "name": "Edulcorante Hileret x 250cc",
+      "brand": "Hileret",
+      "price": 1800,
+      "image": "edulcoranteHileretLiquidoClasico.png",
+      "description": "Edulcorante Liquido Hileret de 250cc"
+    }
+  ]

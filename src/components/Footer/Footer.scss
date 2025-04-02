@@ -1,0 +1,19 @@
+.footer {
+    background-color: #d2b48c; // marrón claro
+    color: #fff;
+    padding: 2rem;
+    text-align: center;
+    
+    &-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    h3 {
+      margin-bottom: 1rem;
+    }
+    
+    p {
+      margin: 0.5rem 0;
+    }
+  }
