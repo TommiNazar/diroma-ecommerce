@@ -1,54 +1,60 @@
-import React, { createContext, useState, useContext, useMemo } from 'react';
+import React, { createContext, useState, useContext, useMemo, useEffect } from 'react';
 
 const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
-  const [cart, setCart] = useState([]);
+  const [cart, setCart] = useState(() => {
+    // Cargar carrito desde localStorage si existe
+    if (typeof window !== 'undefined') {
+      const savedCart = localStorage.getItem('diroma-cart');
+      return savedCart ? JSON.parse(savedCart) : [];
+    }
+    return [];
+  });
 
-  // Agregar al carrito
+  // Persistir carrito en localStorage
+  useEffect(() => {
+    localStorage.setItem('diroma-cart', JSON.stringify(cart));
+  }, [cart]);
+
   const addToCart = (product) => {
-    setCart(prevCart => {
-      const existingItem = prevCart.find(item => item.id === product.id);
-      return existingItem
-        ? prevCart.map(item =>
-            item.id === product.id
-              ? { ...item, quantity: item.quantity + 1 }
+    setCart(prev => {
+      const existing = prev.find(item => item.id === product.id);
+      return existing 
+        ? prev.map(item => 
+            item.id === product.id 
+              ? { ...item, quantity: item.quantity + 1 } 
               : item
           )
-        : [...prevCart, { ...product, quantity: 1 }];
+        : [...prev, { ...product, quantity: 1 }];
     });
   };
 
-  // Eliminar del carrito
   const removeFromCart = (productId) => {
-    setCart(prevCart => prevCart.filter(item => item.id !== productId));
+    setCart(prev => prev.filter(item => item.id !== productId));
   };
 
-  // Actualizar cantidad
-  const updateQuantity = (productId, newQuantity) => {
-    if (newQuantity <= 0) {
+  const updateQuantity = (productId, quantity) => {
+    if (quantity < 1) {
       removeFromCart(productId);
       return;
     }
-    setCart(prevCart =>
-      prevCart.map(item =>
-        item.id === productId ? { ...item, quantity: newQuantity } : item
+    setCart(prev => 
+      prev.map(item => 
+        item.id === productId ? { ...item, quantity } : item
       )
     );
   };
 
-  // Vaciar carrito
   const clearCart = () => setCart([]);
 
-  // Total de items
   const totalItems = useMemo(() => 
     cart.reduce((sum, item) => sum + item.quantity, 0), 
     [cart]
   );
 
-  // Total precio
-  const totalPrice = useMemo(() =>
-    cart.reduce((sum, item) => sum + (item.price * item.quantity), 0),
+  const totalPrice = useMemo(() => 
+    cart.reduce((sum, item) => sum + (item.price * item.quantity), 0), 
     [cart]
   );
 
@@ -72,7 +78,7 @@ export const CartProvider = ({ children }) => {
 export const useCart = () => {
   const context = useContext(CartContext);
   if (!context) {
-    throw new Error('useCart debe usarse dentro de un CartProvider');
+    throw new Error('useCart debe usarse dentro de CartProvider');
   }
   return context;
 };
