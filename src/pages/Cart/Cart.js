@@ -49,7 +49,7 @@ const Cart = () => {
 
     try {
       // 2. Enviamos los datos a FormSubmit
-      const response = await fetch('https://formsubmit.co/ajax/92e0265dda88540398c5bc2330afbbd6', { // Reemplaza con TU CÓDIGO
+      const response = await fetch('https://formsubmit.co/el/lonono', { // Reemplaza con TU CÓDIGO
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',
