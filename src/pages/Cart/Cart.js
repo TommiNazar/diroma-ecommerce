@@ -29,11 +29,11 @@ const Cart = () => {
     setIsLoading(true);
     setError(null);
 
-    // Preparamos los datos para FormSubmit
+    // 1. Preparamos los datos para FormSubmit
     const formDataToSend = {
-      _subject: `Nuevo Pedido Diroma - ${formData.name}`,
       _template: 'table', // Formato de tabla en el email
-      _captcha: 'false', // Desactiva CAPTCHA (opcional)
+      _captcha: 'false', // Desactiva CAPTCHA
+      _subject: `Nuevo Pedido Diroma - ${formData.name}`,
       'N° Pedido': `ORD-${Date.now().toString().slice(-6)}`,
       'Nombre': formData.name,
       'Teléfono': formData.phone,
@@ -41,14 +41,15 @@ const Cart = () => {
       'Dirección': formData.address,
       'Método de Pago': formData.paymentMethod,
       'Productos': cart.map(item => 
-        `• ${item.name} (${item.brand}) - ${item.quantity} x $${item.price}`
+        `• ${item.name} (${item.brand}) - ${item.quantity} x $${item.price} = $${item.quantity * item.price}`
       ).join('\n'),
       'Total': `$${cart.reduce((sum, item) => sum + (item.price * item.quantity), 0)}`,
       'Notas': formData.notes || 'Ninguna'
     };
 
     try {
-      const response = await fetch('https://formsubmit.co/activate/92e0265dda88540398c5bc2330afbbd6', { // Reemplaza con tu código de FormSubmit
+      // 2. Enviamos los datos a FormSubmit
+      const response = await fetch('https://formsubmit.co/ajax/92e0265dda88540398c5bc2330afbbd6', { // Reemplaza con TU CÓDIGO
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',
@@ -59,15 +60,18 @@ const Cart = () => {
 
       const data = await response.json();
 
-      if (response.ok && data.success) {
-        setOrderSent(true);
-        clearCart(); // Vacía el carrito después del envío
-      } else {
-        throw new Error(data.message || 'Error al enviar el pedido');
+      // 3. Verificamos la respuesta
+      if (!response.ok || !data.success) {
+        throw new Error(data.message || 'Error al procesar el pedido');
       }
+
+      // 4. Éxito: limpiamos el carrito y mostramos confirmación
+      setOrderSent(true);
+      clearCart();
+      
     } catch (err) {
-      console.error('Error:', err);
-      setError('Error al enviar el pedido. Por favor intente nuevamente.');
+      console.error('Error al enviar el pedido:', err);
+      setError(err.message || 'Ocurrió un error. Por favor intente nuevamente.');
     } finally {
       setIsLoading(false);
     }
