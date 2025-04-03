@@ -48,7 +48,7 @@ const Cart = () => {
     };
 
     try {
-      const response = await fetch('https://formsubmit.co/tomminazar@gmail.com', { // Reemplaza con tu código de FormSubmit
+      const response = await fetch('https://formsubmit.co/activate/92e0265dda88540398c5bc2330afbbd6', { // Reemplaza con tu código de FormSubmit
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',

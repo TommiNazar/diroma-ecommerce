@@ -19,7 +19,7 @@ const Home = () => {
       
       <main>
         <section className="hero">
-          <div className="hero-image"><img src={imagendiroma} alt='diroma' /></div>
+          <img src={imagendiroma} alt='diroma' className="hero-image" />
         </section>
         
         <section className="about">

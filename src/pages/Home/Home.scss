@@ -8,19 +8,35 @@
       padding: 2rem;
     }
     
-    .hero {
-      &-image {
-        height: 80vh;
-        width: 100%;
-        background-color: #e6d5b8; // marrón más claro
-        margin-bottom: 2rem;
-      }
-    }
+   
+.hero {
+  width: 100%;
+  height: auto;  /* Altura flexible */
+  max-height: 500px; /* Altura máxima */
+  overflow: hidden;
+  position: relative;
+
+  &-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Mantiene proporciones cubriendo el espacio */
+    object-position: center; /* Enfoca el centro de la imagen */
+  }
+}
+
+/* Para móviles */
+@media (max-width: 768px) {
+  .hero {
+    height: 200px; /* Altura fija para móviles */
+    max-height: none;
     
-    .hero-image img{
-        width: 100%;
-        height: 100%;
+    &-image {
+      object-position: top center; /* Ajusta el enfoque si es necesario */
     }
+  }
+}
+    
+    
 
     
     
